@@ -1,6 +1,6 @@
 ---
 - name: Install Prometheus
- hosts: prometheus
+ hosts: node1
  tasks:
  - name: Install required packages
    apt:
