@@ -1,27 +1,27 @@
 ---
-- name: Install Prometheus
- hosts: node1
- tasks:
- - name: Install required packages
-   apt:
-     name: "{{ item }}"
-     state: present
-   with_items:
+- name: install prometheus
+  hosts: node1
+  tasks:
+     - name: Install required packages
+       apt:
+         name: "{{ item }}"
+         state: present
+       with_items:
      - prometheus
      - prometheus-node-exporter
      - prometheus-alertmanager
 
- - name: Copy Prometheus configuration file
-   copy:
-     src: prometheus.yml
-     dest: /etc/prometheus/prometheus.yml
-   notify:
+     - name: Copy Prometheus configuration file
+       copy:
+       src: prometheus.yml
+       dest: /etc/prometheus/prometheus.yml
+       notify:
      - restart prometheus
 
 - name: Restart Prometheus
- hosts: prometheus
- tasks:
- - name: Restart Prometheus service
-   service:
+  hosts: node1
+  tasks:
+  - name: Restart Prometheus service
+    service:
      name: prometheus
      state: restarted
